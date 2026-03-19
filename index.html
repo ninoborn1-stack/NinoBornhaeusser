@@ -1052,7 +1052,6 @@
     /* ─── RESPONSIVE ────────────────────────────────────────────────── */
     @media (max-width: 900px) {
       .hero-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 48px; }
-      .hero-right { order: -1; }
       .hero-stats { grid-template-columns: repeat(2, 1fr); }
       .skills-grid { grid-template-columns: 1fr 1fr; }
       .pricing-grid { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
@@ -1068,7 +1067,18 @@
     @media (max-width: 600px) {
       .container { padding: 0 20px; }
       .skills-grid { grid-template-columns: 1fr; }
-      .hero-stats { grid-template-columns: 1fr 1fr; }
+      #hero {
+        min-height: auto;
+        padding: calc(var(--nav-h) + 40px) 0 64px;
+        align-items: flex-start;
+      }
+      .hero-grid { gap: 40px; }
+      .hero-name { font-size: clamp(2.8rem, 10vw, 4rem); margin-bottom: 20px; }
+      .hero-sub { font-size: 1rem; margin-bottom: 32px; }
+      .hero-stats { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .stat-card { padding: 20px 16px; }
+      .stat-number { font-size: 2rem; }
+      .hero-badge { padding: 16px 18px; }
     }
   [data-lucide] {
     width: 40px;
