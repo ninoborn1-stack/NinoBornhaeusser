@@ -1557,7 +1557,7 @@
           <div class="contact-info">
             <div class="contact-item">
               <span class="contact-item-label" data-i18n="contact.email">Email</span>
-              <span class="contact-item-value">nino@bornhaeusser.dev</span>
+              <span class="contact-item-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2e404740416e4c415c40464f4b5b5d5d4b5c004a4b58">[email&#160;protected]</a></span>
             </div>
             <div class="contact-item">
               <span class="contact-item-label" data-i18n="contact.location">Location</span>
@@ -1637,7 +1637,7 @@
   </footer>
 
   <!-- ── SCRIPT ────────────────────────────────────────────────────────── -->
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     /* ─── TRANSLATIONS ────────────────────────────────────────────── */
     const i18n = {
       en: {
@@ -1973,17 +1973,63 @@
 
     revealEls.forEach(el => revealObserver.observe(el));
 
+
     /* ─── FORM ────────────────────────────────────────────────────── */
-    function handleFormSubmit(e) {
+    async function handleFormSubmit(e) {
       e.preventDefault();
       const btn = e.target;
       const orig = btn.innerHTML;
-      btn.innerHTML = currentLang === 'de' ? 'Gesendet ✓' : 'Sent ✓';
-      btn.style.background = '#4caf50';
-      setTimeout(() => {
-        btn.innerHTML = orig;
-        btn.style.background = '';
-      }, 3000);
+
+      const inputs = document.querySelectorAll('.form-input, .form-textarea, .form-select');
+      const [nameEl, emailEl, serviceEl, budgetEl, messageEl] = inputs;
+
+      // Validation
+      let valid = true;
+      [nameEl, emailEl, messageEl].forEach(el => {
+        el.style.borderColor = '';
+        if (!el.value.trim()) { el.style.borderColor = 'tomato'; valid = false; }
+      });
+      if (!valid) {
+        btn.innerHTML = currentLang === 'de' ? 'Pflichtfelder ausfüllen' : 'Please fill required fields';
+        btn.style.background = 'tomato';
+        setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; }, 3000);
+        return;
+      }
+
+      // Loading state
+      btn.innerHTML = currentLang === 'de' ? 'Wird gesendet…' : 'Sending…';
+      btn.disabled = true;
+      btn.style.opacity = '0.7';
+
+      try {
+        const res = await fetch('https://formspree.io/f/xbdzwqyy', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: nameEl.value,
+            email: emailEl.value,
+            service: serviceEl.value,
+            budget: budgetEl.value,
+            message: messageEl.value,
+          })
+        });
+
+        if (res.ok) {
+          btn.innerHTML = currentLang === 'de' ? 'Nachricht gesendet ✓' : 'Message sent ✓';
+          btn.style.background = '#4caf50';
+          btn.style.opacity = '1';
+          inputs.forEach(el => { el.value = ''; el.style.borderColor = ''; });
+          setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; btn.disabled = false; }, 4000);
+        } else {
+          throw new Error('failed');
+        }
+      } catch {
+        btn.innerHTML = currentLang === 'de' ? 'Fehler — bitte erneut versuchen' : 'Error — please try again';
+        btn.style.background = 'tomato';
+        btn.style.opacity = '1';
+        btn.disabled = false;
+        setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; }, 4000);
+      }
     }
   </script>
 </body>
