@@ -1073,11 +1073,17 @@
         align-items: flex-start;
       }
       .hero-grid { gap: 40px; }
-      .hero-name { font-size: clamp(2.8rem, 10vw, 4rem); margin-bottom: 20px; }
-      .hero-sub { font-size: 1rem; margin-bottom: 32px; }
-      .hero-stats { grid-template-columns: 1fr 1fr; gap: 12px; }
-      .stat-card { padding: 20px 16px; }
-      .stat-number { font-size: 2rem; }
+      .hero-name {
+        font-size: clamp(1.6rem, 7.5vw, 3.5rem);
+        overflow-wrap: break-word;
+        word-break: break-word;
+        margin-bottom: 20px;
+      }
+      .hero-sub { font-size: 1rem; margin-bottom: 32px; max-width: 100%; }
+      .hero-right { min-width: 0; max-width: 100%; }
+      .hero-stats { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .stat-card { padding: 16px 14px; min-width: 0; }
+      .stat-number { font-size: 1.8rem; }
       .hero-badge { padding: 16px 18px; }
     }
   [data-lucide] {
