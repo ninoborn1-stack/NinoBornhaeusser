@@ -1066,7 +1066,17 @@
       .skills-grid { grid-template-columns: 1fr; }
       .hero-stats { grid-template-columns: 1fr 1fr; }
     }
+  [data-lucide] {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    fill: none;
+    display: inline-block;
+    vertical-align: middle;
+  }
   </style>
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
 <body>
@@ -1204,28 +1214,28 @@
 
         <div class="about-values">
           <div class="value-item reveal">
-            <div class="value-icon">⚡</div>
+            <div class="value-icon"><i data-lucide="zap"></i></div>
             <div class="value-body">
               <h4 data-i18n="about.v1.title">Fast Delivery</h4>
               <p data-i18n="about.v1.text">First working version within 48 hours. No endless waiting, no vague timelines.</p>
             </div>
           </div>
           <div class="value-item reveal reveal-delay-1">
-            <div class="value-icon">🎯</div>
+            <div class="value-icon"><i data-lucide="target"></i></div>
             <div class="value-body">
               <h4 data-i18n="about.v2.title">Reliability</h4>
               <p data-i18n="about.v2.text">What I commit to, I deliver. Clear communication throughout every project.</p>
             </div>
           </div>
           <div class="value-item reveal reveal-delay-2">
-            <div class="value-icon">🧠</div>
+            <div class="value-icon"><i data-lucide="brain"></i></div>
             <div class="value-body">
               <h4 data-i18n="about.v3.title">Strategic Thinking</h4>
               <p data-i18n="about.v3.text">I ask the right questions before I build. Your goals drive every design decision.</p>
             </div>
           </div>
           <div class="value-item reveal reveal-delay-3">
-            <div class="value-icon">✦</div>
+            <div class="value-icon"><i data-lucide="sparkles"></i></div>
             <div class="value-body">
               <h4 data-i18n="about.v4.title">Clean, Modern Craft</h4>
               <p data-i18n="about.v4.text">No bloat, no templates. Every line of code and every pixel is intentional.</p>
@@ -1247,7 +1257,7 @@
 
       <div class="skills-grid">
         <div class="skill-group reveal">
-          <div class="skill-group-icon">🎨</div>
+          <div class="skill-group-icon"><i data-lucide="palette"></i></div>
           <h3 data-i18n="skills.g1">Design</h3>
           <div class="skill-tags">
             <span class="skill-tag">Figma</span>
@@ -1259,7 +1269,7 @@
           </div>
         </div>
         <div class="skill-group reveal reveal-delay-1">
-          <div class="skill-group-icon">💻</div>
+          <div class="skill-group-icon"><i data-lucide="code-2"></i></div>
           <h3 data-i18n="skills.g2">Frontend</h3>
           <div class="skill-tags">
             <span class="skill-tag">HTML5</span>
@@ -1271,7 +1281,7 @@
           </div>
         </div>
         <div class="skill-group reveal reveal-delay-2">
-          <div class="skill-group-icon">⚙️</div>
+          <div class="skill-group-icon"><i data-lucide="settings"></i></div>
           <h3 data-i18n="skills.g3">CMS & Backend</h3>
           <div class="skill-tags">
             <span class="skill-tag">WordPress</span>
@@ -1283,7 +1293,7 @@
           </div>
         </div>
         <div class="skill-group reveal">
-          <div class="skill-group-icon">🚀</div>
+          <div class="skill-group-icon"><i data-lucide="rocket"></i></div>
           <h3 data-i18n="skills.g4">Deployment</h3>
           <div class="skill-tags">
             <span class="skill-tag">GitHub</span>
@@ -1294,7 +1304,7 @@
           </div>
         </div>
         <div class="skill-group reveal reveal-delay-1">
-          <div class="skill-group-icon">📊</div>
+          <div class="skill-group-icon"><i data-lucide="bar-chart-2"></i></div>
           <h3 data-i18n="skills.g5">Performance & SEO</h3>
           <div class="skill-tags">
             <span class="skill-tag">Core Web Vitals</span>
@@ -1305,7 +1315,7 @@
           </div>
         </div>
         <div class="skill-group reveal reveal-delay-2">
-          <div class="skill-group-icon">🤝</div>
+          <div class="skill-group-icon"><i data-lucide="users"></i></div>
           <h3 data-i18n="skills.g6">Collaboration</h3>
           <div class="skill-tags">
             <span class="skill-tag">Upwork</span>
@@ -1447,11 +1457,11 @@
           <div class="pricing-note" data-i18n="pricing.t1.note">one-time · 5 day delivery</div>
           <div class="pricing-divider"></div>
           <ul class="pricing-features">
-            <li><span class="check">✓</span><span data-i18n="pricing.t1.f1">1-page landing page</span></li>
-            <li><span class="check">✓</span><span data-i18n="pricing.t1.f2">Mobile responsive</span></li>
-            <li><span class="check">✓</span><span data-i18n="pricing.t1.f3">Contact form</span></li>
-            <li><span class="check">✓</span><span data-i18n="pricing.t1.f4">GitHub deploy</span></li>
-            <li><span class="check">✓</span><span data-i18n="pricing.t1.f5">1 revision round</span></li>
+            <li><span class="check"><i data-lucide="check"></i></span><span data-i18n="pricing.t1.f1">1-page landing page</span></li>
+            <li><span class="check"><i data-lucide="check"></i></span><span data-i18n="pricing.t1.f2">Mobile responsive</span></li>
+            <li><span class="check"><i data-lucide="check"></i></span><span data-i18n="pricing.t1.f3">Contact form</span></li>
+            <li><span class="check"><i data-lucide="check"></i></span><span data-i18n="pricing.t1.f4">GitHub deploy</span></li>
+            <li><span class="check"><i data-lucide="check"></i></span><span data-i18n="pricing.t1.f5">1 revision round</span></li>
           </ul>
           <a href="#contact" class="btn-outline" style="width:100%; text-align:center; justify-content:center;" data-i18n="pricing.cta">Get started</a>
         </div>
@@ -1463,12 +1473,12 @@
           <div class="pricing-note" data-i18n="pricing.t2.note">one-time · 10 day delivery</div>
           <div class="pricing-divider"></div>
           <ul class="pricing-features">
-            <li><span class="check">✓</span><span data-i18n="pricing.t2.f1">Multi-page website (up to 5)</span></li>
-            <li><span class="check">✓</span><span data-i18n="pricing.t2.f2">WordPress or custom HTML/CSS/JS</span></li>
-            <li><span class="check">✓</span><span data-i18n="pricing.t2.f3">Animations & interactions</span></li>
-            <li><span class="check">✓</span><span data-i18n="pricing.t2.f4">SEO basics + Google Analytics</span></li>
-            <li><span class="check">✓</span><span data-i18n="pricing.t2.f5">3 revision rounds</span></li>
-            <li><span class="check">✓</span><span data-i18n="pricing.t2.f6">2 weeks post-delivery support</span></li>
+            <li><span class="check"><i data-lucide="check"></i></span><span data-i18n="pricing.t2.f1">Multi-page website (up to 5)</span></li>
+            <li><span class="check"><i data-lucide="check"></i></span><span data-i18n="pricing.t2.f2">WordPress or custom HTML/CSS/JS</span></li>
+            <li><span class="check"><i data-lucide="check"></i></span><span data-i18n="pricing.t2.f3">Animations & interactions</span></li>
+            <li><span class="check"><i data-lucide="check"></i></span><span data-i18n="pricing.t2.f4">SEO basics + Google Analytics</span></li>
+            <li><span class="check"><i data-lucide="check"></i></span><span data-i18n="pricing.t2.f5">3 revision rounds</span></li>
+            <li><span class="check"><i data-lucide="check"></i></span><span data-i18n="pricing.t2.f6">2 weeks post-delivery support</span></li>
           </ul>
           <a href="#contact" class="btn-primary" style="width:100%; text-align:center; justify-content:center;" data-i18n="pricing.cta">Get started</a>
         </div>
@@ -1479,11 +1489,11 @@
           <div class="pricing-note" data-i18n="pricing.t3.note">scoped to your project</div>
           <div class="pricing-divider"></div>
           <ul class="pricing-features">
-            <li><span class="check">✓</span><span data-i18n="pricing.t3.f1">Web apps & dashboards</span></li>
-            <li><span class="check">✓</span><span data-i18n="pricing.t3.f2">Python automation & APIs</span></li>
-            <li><span class="check">✓</span><span data-i18n="pricing.t3.f3">WooCommerce / e-commerce</span></li>
-            <li><span class="check">✓</span><span data-i18n="pricing.t3.f4">Ongoing retainer possible</span></li>
-            <li><span class="check">✓</span><span data-i18n="pricing.t3.f5">Milestone-based billing</span></li>
+            <li><span class="check"><i data-lucide="check"></i></span><span data-i18n="pricing.t3.f1">Web apps & dashboards</span></li>
+            <li><span class="check"><i data-lucide="check"></i></span><span data-i18n="pricing.t3.f2">Python automation & APIs</span></li>
+            <li><span class="check"><i data-lucide="check"></i></span><span data-i18n="pricing.t3.f3">WooCommerce / e-commerce</span></li>
+            <li><span class="check"><i data-lucide="check"></i></span><span data-i18n="pricing.t3.f4">Ongoing retainer possible</span></li>
+            <li><span class="check"><i data-lucide="check"></i></span><span data-i18n="pricing.t3.f5">Milestone-based billing</span></li>
           </ul>
           <a href="#contact" class="btn-outline" style="width:100%; text-align:center; justify-content:center;" data-i18n="pricing.cta.custom">Request quote</a>
         </div>
@@ -2031,6 +2041,7 @@
         setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; }, 4000);
       }
     }
+    lucide.createIcons();
   </script>
 </body>
 </html>
