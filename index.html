@@ -978,6 +978,32 @@
       color: var(--text-3);
     }
 
+    .footer-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 16px;
+    }
+
+    .footer-social a {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      color: var(--text-3);
+      transition: color 0.2s;
+      text-decoration: none;
+    }
+
+    .footer-social a:hover { color: var(--text); }
+
+    .footer-social [data-lucide] { width: 16px; height: 16px; }
+
     .footer-links {
       display: flex;
       gap: 24px;
@@ -1226,7 +1252,7 @@
               I'm <strong>Nino Bornhäußer</strong>, a Berlin-based freelance web designer & developer. I work at the intersection of design and technology — building digital products that don't just look good, but actually work.
             </p>
             <p data-i18n="about.p2">
-              My toolkit: <strong>WordPress</strong> for content-driven sites, <strong>Python</strong> for backend logic and automation, and <strong>HTML/CSS/JS</strong> for everything that needs to feel fast and intentional. I'm available on <strong>Upwork</strong> and <strong>Malt</strong>.
+              My toolkit: <strong>WordPress</strong> for content-driven sites, <strong>Python</strong> for backend logic and automation, and <strong>HTML/CSS/JS</strong> for everything that needs to feel fast and intentional. I'm available on <a href="https://www.upwork.com/freelancers/~01c146554b8d2a6f06?mp_source=share" target="_blank" rel="noopener"><strong>Upwork</strong></a> and <a href="https://www.malt.de/profile/ninobornhaußer" target="_blank" rel="noopener"><strong>Malt</strong></a>.
             </p>
             <p data-i18n="about.p3">
               What sets me apart is delivery discipline — I don't just build things, I ship them on time, communicate proactively, and think strategically about what the client actually needs.
@@ -1661,9 +1687,22 @@
       <div class="footer-inner">
         <a href="#hero" class="footer-logo">NB<span>.</span></a>
         <div class="footer-copy" data-i18n="footer.copy">© 2025 Nino Bornhäußer. All rights reserved.</div>
-        <div class="footer-links">
-          <a href="#" data-i18n="footer.imprint">Imprint</a>
-          <a href="#" data-i18n="footer.privacy">Privacy</a>
+        <div class="footer-right">
+          <div class="footer-social">
+            <a href="https://www.linkedin.com/in/nino-bornhäußer-023a113b8" target="_blank" rel="noopener">
+              <i data-lucide="linkedin"></i> LinkedIn
+            </a>
+            <a href="https://www.upwork.com/freelancers/~01c146554b8d2a6f06?mp_source=share" target="_blank" rel="noopener">
+              <i data-lucide="briefcase"></i> Upwork
+            </a>
+            <a href="https://www.malt.de/profile/ninobornhaußer" target="_blank" rel="noopener">
+              <i data-lucide="code-2"></i> Malt
+            </a>
+          </div>
+          <div class="footer-links">
+            <a href="#" data-i18n="footer.imprint">Imprint</a>
+            <a href="#" data-i18n="footer.privacy">Privacy</a>
+          </div>
         </div>
       </div>
     </div>
@@ -1694,7 +1733,7 @@
         'about.values.label': 'What I Stand For',
         'about.title': 'Strategic thinking meets clean execution.',
         'about.p1': 'I\'m <strong>Nino Bornhäußer</strong>, a Berlin-based freelance web designer & developer. I work at the intersection of design and technology — building digital products that don\'t just look good, but actually work.',
-        'about.p2': 'My toolkit: <strong>WordPress</strong> for content-driven sites, <strong>Python</strong> for backend logic and automation, and <strong>HTML/CSS/JS</strong> for everything that needs to feel fast and intentional. Available on <strong>Upwork</strong> and <strong>Malt</strong>.',
+        'about.p2': 'My toolkit: <strong>WordPress</strong> for content-driven sites, <strong>Python</strong> for backend logic and automation, and <strong>HTML/CSS/JS</strong> for everything that needs to feel fast and intentional. Available on <a href="https://www.upwork.com/freelancers/~01c146554b8d2a6f06?mp_source=share" target="_blank" rel="noopener"><strong>Upwork</strong></a> and <a href="https://www.malt.de/profile/ninobornhaußer" target="_blank" rel="noopener"><strong>Malt</strong></a>.',
         'about.p3': 'What sets me apart is delivery discipline — I don\'t just build things, I ship them on time, communicate proactively, and think strategically about what the client actually needs.',
         'about.v1.title': 'Fast Delivery',
         'about.v1.text': 'First working version within 48 hours. No endless waiting, no vague timelines.',
@@ -1829,7 +1868,7 @@
         'about.values.label': 'Wofür ich stehe',
         'about.title': 'Strategisches Denken trifft saubere Umsetzung.',
         'about.p1': 'Ich bin <strong>Nino Bornhäußer</strong>, Freelance Webdesigner & Entwickler aus Berlin. Ich arbeite an der Schnittstelle zwischen Design und Technologie – und baue digitale Produkte, die nicht nur gut aussehen, sondern auch funktionieren.',
-        'about.p2': 'Mein Werkzeugkasten: <strong>WordPress</strong> für contentgetriebene Seiten, <strong>Python</strong> für Backend-Logik und Automatisierung sowie <strong>HTML/CSS/JS</strong> für alles, was schnell und präzise sein muss. Verfügbar auf <strong>Upwork</strong> und <strong>Malt</strong>.',
+        'about.p2': 'Mein Werkzeugkasten: <strong>WordPress</strong> für contentgetriebene Seiten, <strong>Python</strong> für Backend-Logik und Automatisierung sowie <strong>HTML/CSS/JS</strong> für alles, was schnell und präzise sein muss. Verfügbar auf <a href="https://www.upwork.com/freelancers/~01c146554b8d2a6f06?mp_source=share" target="_blank" rel="noopener"><strong>Upwork</strong></a> und <a href="https://www.malt.de/profile/ninobornhaußer" target="_blank" rel="noopener"><strong>Malt</strong></a>.',
         'about.p3': 'Was mich auszeichnet: Lieferdisziplin. Ich baue nicht nur – ich liefere pünktlich, kommuniziere proaktiv und denke strategisch darüber nach, was der Kunde wirklich braucht.',
         'about.v1.title': 'Schnelle Lieferung',
         'about.v1.text': 'Erste lauffähige Version innerhalb von 48 Stunden. Kein ewiges Warten, keine vagen Timelines.',
