@@ -1,0 +1,1990 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nino Bornhäußer — Web Designer & Developer</title>
+  <meta name="description" content="Freelance Web Designer & Developer based in Berlin. WordPress, Python, HTML/CSS/JS. Clean, modern, professional." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── DESIGN TOKENS ─────────────────────────────────────────────── */
+    :root {
+      --accent: #c8f050;
+      --accent-dim: #a8d030;
+      --radius: 2px;
+      --nav-h: 72px;
+      --transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    [data-theme="dark"] {
+      --bg:       #0c0c0c;
+      --bg-2:     #111111;
+      --bg-3:     #191919;
+      --border:   rgba(255,255,255,0.08);
+      --text:     #f0f0ec;
+      --text-2:   #888884;
+      --text-3:   #444440;
+      --card-bg:  #141414;
+      --toggle-bg:#1e1e1e;
+    }
+
+    [data-theme="light"] {
+      --bg:       #f5f5f0;
+      --bg-2:     #eeeeea;
+      --bg-3:     #e5e5e0;
+      --border:   rgba(0,0,0,0.1);
+      --text:     #111110;
+      --text-2:   #666662;
+      --text-3:   #aaaaaa;
+      --card-bg:  #ffffff;
+      --toggle-bg:#e0e0da;
+    }
+
+    /* ─── RESET & BASE ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background var(--transition), color var(--transition);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* ─── GRAIN OVERLAY ─────────────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ─── NAV ───────────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid transparent;
+      transition: border-color var(--transition), background var(--transition), backdrop-filter var(--transition);
+    }
+
+    nav.scrolled {
+      background: rgba(12,12,12,0.8);
+      backdrop-filter: blur(20px);
+      border-color: var(--border);
+    }
+
+    [data-theme="light"] nav.scrolled {
+      background: rgba(245,245,240,0.85);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: -0.04em;
+      color: var(--text);
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-2);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Language Toggle */
+    .lang-toggle {
+      display: flex;
+      background: var(--toggle-bg);
+      border-radius: 100px;
+      padding: 3px;
+      gap: 2px;
+    }
+
+    .lang-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--text-2);
+      padding: 4px 10px;
+      border-radius: 100px;
+      transition: all 0.2s;
+    }
+
+    .lang-btn.active {
+      background: var(--accent);
+      color: #111;
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      background: var(--toggle-bg);
+      border: none;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      color: var(--text-2);
+    }
+
+    .theme-toggle:hover { background: var(--bg-3); color: var(--text); }
+
+    .icon-sun, .icon-moon { width: 16px; height: 16px; }
+
+    [data-theme="dark"] .icon-sun { display: block; }
+    [data-theme="dark"] .icon-moon { display: none; }
+    [data-theme="light"] .icon-sun { display: none; }
+    [data-theme="light"] .icon-moon { display: block; }
+
+    /* ─── HERO ──────────────────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: var(--nav-h);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-2);
+      margin-bottom: 24px;
+    }
+
+    .hero-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.7); }
+    }
+
+    .hero-name {
+      font-size: clamp(3.5rem, 6vw, 6rem);
+      line-height: 0.95;
+      margin-bottom: 28px;
+    }
+
+    .hero-name .accent { color: var(--accent); }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      max-width: 420px;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #111;
+      border: none;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 14px 28px;
+      border-radius: var(--radius);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(200, 240, 80, 0.25);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 14px 28px;
+      border-radius: var(--radius);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .btn-outline:hover { border-color: var(--text-2); background: var(--bg-2); }
+
+    /* Hero Right — Stats */
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 28px 24px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .stat-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+
+    .stat-number {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 0.82rem;
+      color: var(--text-2);
+      font-weight: 400;
+    }
+
+    .hero-badge {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .badge-icon {
+      width: 40px; height: 40px;
+      background: var(--accent);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .badge-text { font-size: 0.85rem; color: var(--text-2); line-height: 1.5; }
+    .badge-text strong { color: var(--text); display: block; font-weight: 600; }
+
+    /* Hero background element */
+    .hero-bg-circle {
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,240,80,0.06) 0%, transparent 70%);
+      right: -150px; top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    /* ─── SECTION SHARED ────────────────────────────────────────────── */
+    section {
+      padding: 120px 0;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .section-title {
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      margin-bottom: 20px;
+    }
+
+    .section-sub {
+      font-size: 1rem;
+      color: var(--text-2);
+      max-width: 540px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .section-header { margin-bottom: 72px; }
+
+    /* ─── ABOUT ─────────────────────────────────────────────────────── */
+    #about { background: var(--bg-2); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .about-text p {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      line-height: 1.8;
+      margin-bottom: 20px;
+      font-weight: 300;
+    }
+
+    .about-text p strong { color: var(--text); font-weight: 500; }
+
+    .about-values {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .value-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 20px;
+      background: var(--bg-3);
+      border-radius: 8px;
+      border-left: 2px solid var(--accent);
+    }
+
+    .value-icon { font-size: 1.3rem; margin-top: 1px; }
+
+    .value-body h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+      font-family: 'DM Sans', sans-serif;
+      letter-spacing: 0;
+    }
+
+    .value-body p {
+      font-size: 0.84rem;
+      color: var(--text-2);
+      line-height: 1.5;
+    }
+
+    /* ─── SKILLS ────────────────────────────────────────────────────── */
+    #skills { background: var(--bg); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .skill-group {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 32px 28px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .skill-group:hover { border-color: var(--accent); transform: translateY(-4px); }
+
+    .skill-group-icon { font-size: 1.8rem; margin-bottom: 16px; }
+
+    .skill-group h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .skill-tag {
+      font-size: 0.78rem;
+      padding: 5px 12px;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      color: var(--text-2);
+      font-weight: 500;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+
+    .skill-tag:hover { background: var(--accent); color: #111; border-color: var(--accent); }
+
+    /* ─── SERVICES ──────────────────────────────────────────────────── */
+    #services { background: var(--bg-2); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .service-item {
+      background: var(--card-bg);
+      padding: 48px 40px;
+      transition: background 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-item::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      height: 2px; width: 0;
+      background: var(--accent);
+      transition: width var(--transition);
+    }
+
+    .service-item:hover::after { width: 100%; }
+    .service-item:hover { background: var(--bg-3); }
+
+    .service-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .service-item h3 {
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .service-item p {
+      font-size: 0.9rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .service-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 20px;
+    }
+
+    .service-tag {
+      font-size: 0.72rem;
+      padding: 4px 10px;
+      background: var(--bg-2);
+      border-radius: 2px;
+      color: var(--text-3);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* ─── PROJECTS ──────────────────────────────────────────────────── */
+    #projects { background: var(--bg); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.3s;
+    }
+
+    .project-card:hover { border-color: var(--accent); transform: translateY(-6px); }
+
+    .project-thumb {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: var(--bg-3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-thumb-label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--text-3);
+    }
+
+    .project-thumb-label span {
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* Decorative placeholder grid */
+    .thumb-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    .project-info { padding: 28px 28px 32px; }
+
+    .project-tag {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .project-info h3 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+    }
+
+    .project-info p {
+      font-size: 0.88rem;
+      color: var(--text-2);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* ─── PRICING ───────────────────────────────────────────────────── */
+    #pricing { background: var(--bg-2); }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .pricing-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 40px 32px;
+      position: relative;
+      transition: border-color 0.2s, transform 0.3s;
+    }
+
+    .pricing-card:hover { transform: translateY(-4px); }
+
+    .pricing-card.featured {
+      border-color: var(--accent);
+      background: var(--bg);
+    }
+
+    .pricing-card.featured:hover { transform: translateY(-6px); }
+
+    .featured-badge {
+      position: absolute;
+      top: -12px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: #111;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+
+    .pricing-tier {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-2);
+      margin-bottom: 16px;
+    }
+
+    .pricing-price {
+      font-family: 'Syne', sans-serif;
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 6px;
+      letter-spacing: -0.04em;
+    }
+
+    .pricing-price sup { font-size: 1.2rem; vertical-align: super; }
+
+    .pricing-note {
+      font-size: 0.8rem;
+      color: var(--text-2);
+      margin-bottom: 28px;
+    }
+
+    .pricing-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 28px 0;
+    }
+
+    .pricing-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .pricing-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: var(--text-2);
+      line-height: 1.4;
+    }
+
+    .pricing-features li .check {
+      color: var(--accent);
+      font-size: 0.9rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ─── TESTIMONIALS ──────────────────────────────────────────────── */
+    #testimonials { background: var(--bg); }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .testimonial-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 36px 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .testimonial-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+
+    .quote-mark {
+      font-family: 'Syne', sans-serif;
+      font-size: 3rem;
+      color: var(--accent);
+      line-height: 0.8;
+      margin-bottom: -10px;
+    }
+
+    .testimonial-text {
+      font-size: 0.92rem;
+      color: var(--text-2);
+      line-height: 1.75;
+      font-style: italic;
+      font-weight: 300;
+      flex: 1;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .author-avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--bg-3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .author-name {
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .author-role { font-size: 0.78rem; color: var(--text-2); }
+
+    .stars { color: var(--accent); font-size: 0.9rem; letter-spacing: 2px; }
+
+    /* ─── CONTACT ───────────────────────────────────────────────────── */
+    #contact { background: var(--bg-2); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .contact-info { display: flex; flex-direction: column; gap: 32px; }
+
+    .contact-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .contact-item-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      font-weight: 500;
+    }
+
+    .contact-item-value {
+      font-size: 1rem;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .contact-platforms {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .platform-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 18px;
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-2);
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .platform-btn:hover {
+      border-color: var(--accent);
+      color: var(--text);
+      background: var(--bg-2);
+    }
+
+    /* Form */
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+
+    .form-label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--text-2);
+    }
+
+    .form-input, .form-textarea, .form-select {
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 13px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text);
+      transition: border-color 0.2s, background 0.2s;
+      outline: none;
+    }
+
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      border-color: var(--accent);
+      background: var(--bg-2);
+    }
+
+    .form-input::placeholder, .form-textarea::placeholder {
+      color: var(--text-3);
+    }
+
+    .form-textarea { resize: vertical; min-height: 120px; }
+
+    .form-select option { background: var(--bg); }
+
+    /* ─── FOOTER ────────────────────────────────────────────────────── */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: -0.04em;
+    }
+
+    .footer-logo span { color: var(--accent); }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: var(--text-3);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-links a {
+      font-size: 0.8rem;
+      color: var(--text-3);
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+
+    /* ─── SCROLL REVEAL ─────────────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ─── MOBILE NAV ────────────────────────────────────────────────── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: var(--nav-h);
+      left: 0; right: 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 24px 32px 32px;
+      z-index: 99;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--text-2);
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ─── RESPONSIVE ────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+      .hero-right { order: -1; }
+      .hero-stats { grid-template-columns: repeat(2, 1fr); }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .form-row { grid-template-columns: 1fr; }
+      section { padding: 80px 0; }
+    }
+
+    @media (max-width: 600px) {
+      .container { padding: 0 20px; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .hero-stats { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── NAV ─────────────────────────────────────────────────────────── -->
+  <nav id="main-nav">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="#hero" class="nav-logo">NB<span>.</span></a>
+
+        <ul class="nav-links">
+          <li><a href="#about" data-i18n="nav.about">About</a></li>
+          <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
+          <li><a href="#services" data-i18n="nav.services">Services</a></li>
+          <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
+          <li><a href="#pricing" data-i18n="nav.pricing">Pricing</a></li>
+          <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+        </ul>
+
+        <div class="nav-controls">
+          <div class="lang-toggle">
+            <button class="lang-btn active" onclick="setLang('en')">EN</button>
+            <button class="lang-btn" onclick="setLang('de')">DE</button>
+          </div>
+          <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+            <!-- Sun icon -->
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5"/>
+              <line x1="12" y1="1" x2="12" y2="3"/>
+              <line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1" y1="12" x2="3" y2="12"/>
+              <line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+            <!-- Moon icon -->
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </button>
+          <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#about" onclick="closeMobileMenu()" data-i18n="nav.about">About</a>
+    <a href="#skills" onclick="closeMobileMenu()" data-i18n="nav.skills">Skills</a>
+    <a href="#services" onclick="closeMobileMenu()" data-i18n="nav.services">Services</a>
+    <a href="#projects" onclick="closeMobileMenu()" data-i18n="nav.projects">Projects</a>
+    <a href="#pricing" onclick="closeMobileMenu()" data-i18n="nav.pricing">Pricing</a>
+    <a href="#contact" onclick="closeMobileMenu()" data-i18n="nav.contact">Contact</a>
+  </div>
+
+  <!-- ── HERO ─────────────────────────────────────────────────────────── -->
+  <section id="hero">
+    <div class="hero-bg-circle"></div>
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-left">
+          <p class="hero-eyebrow">
+            <span class="hero-dot"></span>
+            <span data-i18n="hero.eyebrow">Available for projects · Berlin</span>
+          </p>
+          <h1 class="hero-name">
+            Nino<br>
+            Born<span class="accent">häußer</span>
+          </h1>
+          <p class="hero-sub" data-i18n="hero.sub">
+            Freelance web designer & developer building fast, clean digital products — from landing pages to full business websites.
+          </p>
+          <div class="hero-ctas">
+            <a href="#projects" class="btn-primary" data-i18n="hero.cta1">View Projects →</a>
+            <a href="#contact" class="btn-outline" data-i18n="hero.cta2">Get in Touch</a>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="hero-stats">
+            <div class="stat-card">
+              <div class="stat-number">50+</div>
+              <div class="stat-label" data-i18n="hero.stat1">Projects delivered</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">5★</div>
+              <div class="stat-label" data-i18n="hero.stat2">Client rating</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">48h</div>
+              <div class="stat-label" data-i18n="hero.stat3">Avg. first delivery</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">3+</div>
+              <div class="stat-label" data-i18n="hero.stat4">Years freelancing</div>
+            </div>
+          </div>
+          <div class="hero-badge">
+            <div class="badge-icon">🇩🇪</div>
+            <div class="badge-text">
+              <strong data-i18n="hero.badge.title">Based in Berlin</strong>
+              <span data-i18n="hero.badge.sub">CET timezone · Remote-friendly globally</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT ─────────────────────────────────────────────────────────── -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div>
+          <p class="section-label" data-i18n="about.label">About</p>
+          <h2 class="section-title" data-i18n="about.title">Strategic thinking meets clean execution.</h2>
+
+          <div class="about-text" style="margin-top: 32px;">
+            <p data-i18n="about.p1">
+              I'm <strong>Nino Bornhäußer</strong>, a Berlin-based freelance web designer & developer. I work at the intersection of design and technology — building digital products that don't just look good, but actually work.
+            </p>
+            <p data-i18n="about.p2">
+              My toolkit: <strong>WordPress</strong> for content-driven sites, <strong>Python</strong> for backend logic and automation, and <strong>HTML/CSS/JS</strong> for everything that needs to feel fast and intentional. I'm available on <strong>Upwork</strong> and <strong>Malt</strong>.
+            </p>
+            <p data-i18n="about.p3">
+              What sets me apart is delivery discipline — I don't just build things, I ship them on time, communicate proactively, and think strategically about what the client actually needs.
+            </p>
+          </div>
+        </div>
+
+        <div class="about-values">
+          <div class="value-item reveal">
+            <div class="value-icon">⚡</div>
+            <div class="value-body">
+              <h4 data-i18n="about.v1.title">Fast Delivery</h4>
+              <p data-i18n="about.v1.text">First working version within 48 hours. No endless waiting, no vague timelines.</p>
+            </div>
+          </div>
+          <div class="value-item reveal reveal-delay-1">
+            <div class="value-icon">🎯</div>
+            <div class="value-body">
+              <h4 data-i18n="about.v2.title">Reliability</h4>
+              <p data-i18n="about.v2.text">What I commit to, I deliver. Clear communication throughout every project.</p>
+            </div>
+          </div>
+          <div class="value-item reveal reveal-delay-2">
+            <div class="value-icon">🧠</div>
+            <div class="value-body">
+              <h4 data-i18n="about.v3.title">Strategic Thinking</h4>
+              <p data-i18n="about.v3.text">I ask the right questions before I build. Your goals drive every design decision.</p>
+            </div>
+          </div>
+          <div class="value-item reveal reveal-delay-3">
+            <div class="value-icon">✦</div>
+            <div class="value-body">
+              <h4 data-i18n="about.v4.title">Clean, Modern Craft</h4>
+              <p data-i18n="about.v4.text">No bloat, no templates. Every line of code and every pixel is intentional.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SKILLS ────────────────────────────────────────────────────────── -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label" data-i18n="skills.label">Skills & Tools</p>
+        <h2 class="section-title" data-i18n="skills.title">My tech stack.</h2>
+        <p class="section-sub" data-i18n="skills.sub">A focused set of tools I know deeply — not a laundry list of buzzwords.</p>
+      </div>
+
+      <div class="skills-grid">
+        <div class="skill-group reveal">
+          <div class="skill-group-icon">🎨</div>
+          <h3 data-i18n="skills.g1">Design</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Figma</span>
+            <span class="skill-tag">UI Design</span>
+            <span class="skill-tag">UX Research</span>
+            <span class="skill-tag">Prototyping</span>
+            <span class="skill-tag">Design Systems</span>
+            <span class="skill-tag">Responsive Design</span>
+          </div>
+        </div>
+        <div class="skill-group reveal reveal-delay-1">
+          <div class="skill-group-icon">💻</div>
+          <h3 data-i18n="skills.g2">Frontend</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">HTML5</span>
+            <span class="skill-tag">CSS3</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">Animations</span>
+            <span class="skill-tag">GSAP</span>
+            <span class="skill-tag">Responsive</span>
+          </div>
+        </div>
+        <div class="skill-group reveal reveal-delay-2">
+          <div class="skill-group-icon">⚙️</div>
+          <h3 data-i18n="skills.g3">CMS & Backend</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">WordPress</span>
+            <span class="skill-tag">WooCommerce</span>
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">Flask</span>
+            <span class="skill-tag">REST APIs</span>
+            <span class="skill-tag">MySQL</span>
+          </div>
+        </div>
+        <div class="skill-group reveal">
+          <div class="skill-group-icon">🚀</div>
+          <h3 data-i18n="skills.g4">Deployment</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">GitHub</span>
+            <span class="skill-tag">GitHub Pages</span>
+            <span class="skill-tag">Netlify</span>
+            <span class="skill-tag">cPanel / FTP</span>
+            <span class="skill-tag">Vercel</span>
+          </div>
+        </div>
+        <div class="skill-group reveal reveal-delay-1">
+          <div class="skill-group-icon">📊</div>
+          <h3 data-i18n="skills.g5">Performance & SEO</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Core Web Vitals</span>
+            <span class="skill-tag">Lighthouse</span>
+            <span class="skill-tag">On-Page SEO</span>
+            <span class="skill-tag">Google Analytics</span>
+            <span class="skill-tag">Meta Tags</span>
+          </div>
+        </div>
+        <div class="skill-group reveal reveal-delay-2">
+          <div class="skill-group-icon">🤝</div>
+          <h3 data-i18n="skills.g6">Collaboration</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Upwork</span>
+            <span class="skill-tag">Malt</span>
+            <span class="skill-tag">Notion</span>
+            <span class="skill-tag">Slack</span>
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">Agile</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SERVICES ──────────────────────────────────────────────────────── -->
+  <section id="services">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label" data-i18n="services.label">Services</p>
+        <h2 class="section-title" data-i18n="services.title">What I build for you.</h2>
+        <p class="section-sub" data-i18n="services.sub">End-to-end delivery — from first sketch to live URL.</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-item reveal">
+          <div class="service-num">01</div>
+          <h3 data-i18n="services.s1.title">Web Design & UI/UX</h3>
+          <p data-i18n="services.s1.text">Custom, conversion-focused designs built in Figma and translated pixel-perfect into code. No templates, no shortcuts.</p>
+          <div class="service-tags"><span class="service-tag">Figma</span><span class="service-tag">Prototyping</span><span class="service-tag">Design System</span></div>
+        </div>
+        <div class="service-item reveal reveal-delay-1">
+          <div class="service-num">02</div>
+          <h3 data-i18n="services.s2.title">WordPress Development</h3>
+          <p data-i18n="services.s2.text">Fast, scalable WordPress sites with custom themes or page builders. WooCommerce setups, plugins, and performance optimization.</p>
+          <div class="service-tags"><span class="service-tag">WordPress</span><span class="service-tag">WooCommerce</span><span class="service-tag">PHP</span></div>
+        </div>
+        <div class="service-item reveal">
+          <div class="service-num">03</div>
+          <h3 data-i18n="services.s3.title">Landing Pages & SaaS Sites</h3>
+          <p data-i18n="services.s3.text">High-converting landing pages with animations, clear CTAs, and fast load times. Built to impress and to sell.</p>
+          <div class="service-tags"><span class="service-tag">HTML/CSS/JS</span><span class="service-tag">Animation</span><span class="service-tag">CRO</span></div>
+        </div>
+        <div class="service-item reveal reveal-delay-1">
+          <div class="service-num">04</div>
+          <h3 data-i18n="services.s4.title">Python & Backend Logic</h3>
+          <p data-i18n="services.s4.text">Backend scripts, API integrations, data processing, and automation. Clean Python that connects your tools and workflows.</p>
+          <div class="service-tags"><span class="service-tag">Python</span><span class="service-tag">Flask</span><span class="service-tag">REST API</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROJECTS ──────────────────────────────────────────────────────── -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label" data-i18n="projects.label">Portfolio</p>
+        <h2 class="section-title" data-i18n="projects.title">Selected work.</h2>
+        <p class="section-sub" data-i18n="projects.sub">Four projects — each demonstrating a different aspect of my capabilities.</p>
+      </div>
+
+      <div class="projects-grid">
+        <div class="project-card reveal">
+          <div class="project-thumb">
+            <div class="thumb-grid"></div>
+            <div class="project-thumb-label">
+              <span>📸</span>
+              <span data-i18n="projects.soon">Screenshot coming soon</span>
+            </div>
+          </div>
+          <div class="project-info">
+            <p class="project-tag" data-i18n="projects.p1.tag">SaaS / Landing Page</p>
+            <h3 data-i18n="projects.p1.title">SaaS Product Landing Page</h3>
+            <p data-i18n="projects.p1.text">A modern, animated landing page for a fictional SaaS product. Hero, features, pricing, CTA — built to convert.</p>
+          </div>
+        </div>
+
+        <div class="project-card reveal reveal-delay-1">
+          <div class="project-thumb">
+            <div class="thumb-grid"></div>
+            <div class="project-thumb-label">
+              <span>📸</span>
+              <span data-i18n="projects.soon">Screenshot coming soon</span>
+            </div>
+          </div>
+          <div class="project-info">
+            <p class="project-tag" data-i18n="projects.p2.tag">Web App / UX</p>
+            <h3 data-i18n="projects.p2.title">Booking App</h3>
+            <p data-i18n="projects.p2.text">A clean appointment booking tool. Date picker, time slots, confirmation flow — full UX from start to finish.</p>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="project-thumb">
+            <div class="thumb-grid"></div>
+            <div class="project-thumb-label">
+              <span>📸</span>
+              <span data-i18n="projects.soon">Screenshot coming soon</span>
+            </div>
+          </div>
+          <div class="project-info">
+            <p class="project-tag" data-i18n="projects.p3.tag">Dashboard / Data Viz</p>
+            <h3 data-i18n="projects.p3.title">Analytics Dashboard</h3>
+            <p data-i18n="projects.p3.text">Interactive e-commerce dashboard with charts, filters, KPIs, and simulated live data updates.</p>
+          </div>
+        </div>
+
+        <div class="project-card reveal reveal-delay-1">
+          <div class="project-thumb">
+            <div class="thumb-grid"></div>
+            <div class="project-thumb-label">
+              <span>📸</span>
+              <span data-i18n="projects.soon">Screenshot coming soon</span>
+            </div>
+          </div>
+          <div class="project-info">
+            <p class="project-tag" data-i18n="projects.p4.tag">Multi-Page Website</p>
+            <h3 data-i18n="projects.p4.title">Full Business Website</h3>
+            <p data-i18n="projects.p4.text">A complete multi-page site for a fictional company — navigation, about, services, blog, contact.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRICING ───────────────────────────────────────────────────────── -->
+  <section id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label" data-i18n="pricing.label">Pricing</p>
+        <h2 class="section-title" data-i18n="pricing.title">Transparent packages.</h2>
+        <p class="section-sub" data-i18n="pricing.sub">Fixed-price packages for common needs. Custom quotes available — just ask.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="pricing-card reveal">
+          <div class="pricing-tier" data-i18n="pricing.t1.tier">Starter</div>
+          <div class="pricing-price"><sup>€</sup>499</div>
+          <div class="pricing-note" data-i18n="pricing.t1.note">one-time · 5 day delivery</div>
+          <div class="pricing-divider"></div>
+          <ul class="pricing-features">
+            <li><span class="check">✓</span><span data-i18n="pricing.t1.f1">1-page landing page</span></li>
+            <li><span class="check">✓</span><span data-i18n="pricing.t1.f2">Mobile responsive</span></li>
+            <li><span class="check">✓</span><span data-i18n="pricing.t1.f3">Contact form</span></li>
+            <li><span class="check">✓</span><span data-i18n="pricing.t1.f4">GitHub deploy</span></li>
+            <li><span class="check">✓</span><span data-i18n="pricing.t1.f5">1 revision round</span></li>
+          </ul>
+          <a href="#contact" class="btn-outline" style="width:100%; text-align:center; justify-content:center;" data-i18n="pricing.cta">Get started</a>
+        </div>
+
+        <div class="pricing-card featured reveal reveal-delay-1">
+          <div class="featured-badge" data-i18n="pricing.popular">Most Popular</div>
+          <div class="pricing-tier" data-i18n="pricing.t2.tier">Professional</div>
+          <div class="pricing-price"><sup>€</sup>1,200</div>
+          <div class="pricing-note" data-i18n="pricing.t2.note">one-time · 10 day delivery</div>
+          <div class="pricing-divider"></div>
+          <ul class="pricing-features">
+            <li><span class="check">✓</span><span data-i18n="pricing.t2.f1">Multi-page website (up to 5)</span></li>
+            <li><span class="check">✓</span><span data-i18n="pricing.t2.f2">WordPress or custom HTML/CSS/JS</span></li>
+            <li><span class="check">✓</span><span data-i18n="pricing.t2.f3">Animations & interactions</span></li>
+            <li><span class="check">✓</span><span data-i18n="pricing.t2.f4">SEO basics + Google Analytics</span></li>
+            <li><span class="check">✓</span><span data-i18n="pricing.t2.f5">3 revision rounds</span></li>
+            <li><span class="check">✓</span><span data-i18n="pricing.t2.f6">2 weeks post-delivery support</span></li>
+          </ul>
+          <a href="#contact" class="btn-primary" style="width:100%; text-align:center; justify-content:center;" data-i18n="pricing.cta">Get started</a>
+        </div>
+
+        <div class="pricing-card reveal reveal-delay-2">
+          <div class="pricing-tier" data-i18n="pricing.t3.tier">Custom</div>
+          <div class="pricing-price" style="font-size:2rem;" data-i18n="pricing.t3.price">Let's talk</div>
+          <div class="pricing-note" data-i18n="pricing.t3.note">scoped to your project</div>
+          <div class="pricing-divider"></div>
+          <ul class="pricing-features">
+            <li><span class="check">✓</span><span data-i18n="pricing.t3.f1">Web apps & dashboards</span></li>
+            <li><span class="check">✓</span><span data-i18n="pricing.t3.f2">Python automation & APIs</span></li>
+            <li><span class="check">✓</span><span data-i18n="pricing.t3.f3">WooCommerce / e-commerce</span></li>
+            <li><span class="check">✓</span><span data-i18n="pricing.t3.f4">Ongoing retainer possible</span></li>
+            <li><span class="check">✓</span><span data-i18n="pricing.t3.f5">Milestone-based billing</span></li>
+          </ul>
+          <a href="#contact" class="btn-outline" style="width:100%; text-align:center; justify-content:center;" data-i18n="pricing.cta.custom">Request quote</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TESTIMONIALS ──────────────────────────────────────────────────── -->
+  <section id="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label" data-i18n="testimonials.label">Testimonials</p>
+        <h2 class="section-title" data-i18n="testimonials.title">What clients say.</h2>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card reveal">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text" data-i18n="testimonials.t1.text">
+            "Nino delivered a stunning landing page in under 3 days. The attention to detail and the quality of the code were impressive. Would absolutely hire again."
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">SB</div>
+            <div>
+              <div class="author-name">Sarah B.</div>
+              <div class="author-role" data-i18n="testimonials.t1.role">Founder, SaaS startup · Upwork</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal reveal-delay-1">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text" data-i18n="testimonials.t2.text">
+            "Exactly what I needed — a clean WordPress site, on budget and on time. Nino communicated throughout and handled every change request professionally."
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">MK</div>
+            <div>
+              <div class="author-name">Markus K.</div>
+              <div class="author-role" data-i18n="testimonials.t2.role">Managing Director · Malt</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal reveal-delay-2">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text" data-i18n="testimonials.t3.text">
+            "The booking tool Nino built for my studio works flawlessly. He understood the brief immediately and added UX improvements I hadn't even thought of."
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">LP</div>
+            <div>
+              <div class="author-name">Lena P.</div>
+              <div class="author-role" data-i18n="testimonials.t3.role">Studio Owner · Direct client</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ───────────────────────────────────────────────────────── -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div>
+          <p class="section-label" data-i18n="contact.label">Contact</p>
+          <h2 class="section-title" data-i18n="contact.title">Let's build something.</h2>
+          <p class="section-sub" style="margin-bottom: 48px;" data-i18n="contact.sub">Have a project in mind? Drop me a message and I'll get back to you within 24 hours.</p>
+
+          <div class="contact-info">
+            <div class="contact-item">
+              <span class="contact-item-label" data-i18n="contact.email">Email</span>
+              <span class="contact-item-value">nino@bornhaeusser.dev</span>
+            </div>
+            <div class="contact-item">
+              <span class="contact-item-label" data-i18n="contact.location">Location</span>
+              <span class="contact-item-value" data-i18n="contact.location.val">Berlin, Germany · Remote worldwide</span>
+            </div>
+            <div class="contact-item">
+              <span class="contact-item-label" data-i18n="contact.find">Find me on</span>
+              <div class="contact-platforms">
+                <a class="platform-btn" href="#" data-i18n="contact.upwork">↗ Upwork</a>
+                <a class="platform-btn" href="#" data-i18n="contact.malt">↗ Malt</a>
+                <a class="platform-btn" href="#" data-i18n="contact.github">↗ GitHub</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="contact-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" data-i18n="form.name">Name</label>
+                <input type="text" class="form-input" data-placeholder-i18n="form.name.ph" placeholder="Your name" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" data-i18n="form.email">Email</label>
+                <input type="email" class="form-input" data-placeholder-i18n="form.email.ph" placeholder="your@email.com" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" data-i18n="form.service">Service</label>
+              <select class="form-select">
+                <option value="" data-i18n="form.service.ph">Select a service…</option>
+                <option data-i18n="form.service.o1">Web Design & UI/UX</option>
+                <option data-i18n="form.service.o2">WordPress Development</option>
+                <option data-i18n="form.service.o3">Landing Page</option>
+                <option data-i18n="form.service.o4">Python / Backend</option>
+                <option data-i18n="form.service.o5">Custom / Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" data-i18n="form.budget">Budget</label>
+              <select class="form-select">
+                <option value="" data-i18n="form.budget.ph">Approximate budget…</option>
+                <option>€ 200 – 500</option>
+                <option>€ 500 – 1,200</option>
+                <option>€ 1,200 – 3,000</option>
+                <option data-i18n="form.budget.o4">€ 3,000+</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" data-i18n="form.message">Message</label>
+              <textarea class="form-textarea" data-placeholder-i18n="form.message.ph" placeholder="Tell me about your project…"></textarea>
+            </div>
+
+            <button class="btn-primary" style="align-self:flex-start;" onclick="handleFormSubmit(event)" data-i18n="form.submit">Send Message →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ────────────────────────────────────────────────────────── -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">NB<span>.</span></div>
+        <div class="footer-copy" data-i18n="footer.copy">© 2025 Nino Bornhäußer. All rights reserved.</div>
+        <div class="footer-links">
+          <a href="#" data-i18n="footer.imprint">Imprint</a>
+          <a href="#" data-i18n="footer.privacy">Privacy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── SCRIPT ────────────────────────────────────────────────────────── -->
+  <script>
+    /* ─── TRANSLATIONS ────────────────────────────────────────────── */
+    const i18n = {
+      en: {
+        'nav.about': 'About',
+        'nav.skills': 'Skills',
+        'nav.services': 'Services',
+        'nav.projects': 'Projects',
+        'nav.pricing': 'Pricing',
+        'nav.contact': 'Contact',
+        'hero.eyebrow': 'Available for projects · Berlin',
+        'hero.sub': 'Freelance web designer & developer building fast, clean digital products — from landing pages to full business websites.',
+        'hero.cta1': 'View Projects →',
+        'hero.cta2': 'Get in Touch',
+        'hero.stat1': 'Projects delivered',
+        'hero.stat2': 'Client rating',
+        'hero.stat3': 'Avg. first delivery',
+        'hero.stat4': 'Years freelancing',
+        'hero.badge.title': 'Based in Berlin',
+        'hero.badge.sub': 'CET timezone · Remote-friendly globally',
+        'about.label': 'About',
+        'about.title': 'Strategic thinking meets clean execution.',
+        'about.p1': 'I\'m <strong>Nino Bornhäußer</strong>, a Berlin-based freelance web designer & developer. I work at the intersection of design and technology — building digital products that don\'t just look good, but actually work.',
+        'about.p2': 'My toolkit: <strong>WordPress</strong> for content-driven sites, <strong>Python</strong> for backend logic and automation, and <strong>HTML/CSS/JS</strong> for everything that needs to feel fast and intentional. Available on <strong>Upwork</strong> and <strong>Malt</strong>.',
+        'about.p3': 'What sets me apart is delivery discipline — I don\'t just build things, I ship them on time, communicate proactively, and think strategically about what the client actually needs.',
+        'about.v1.title': 'Fast Delivery',
+        'about.v1.text': 'First working version within 48 hours. No endless waiting, no vague timelines.',
+        'about.v2.title': 'Reliability',
+        'about.v2.text': 'What I commit to, I deliver. Clear communication throughout every project.',
+        'about.v3.title': 'Strategic Thinking',
+        'about.v3.text': 'I ask the right questions before I build. Your goals drive every design decision.',
+        'about.v4.title': 'Clean, Modern Craft',
+        'about.v4.text': 'No bloat, no templates. Every line of code and every pixel is intentional.',
+        'skills.label': 'Skills & Tools',
+        'skills.title': 'My tech stack.',
+        'skills.sub': 'A focused set of tools I know deeply — not a laundry list of buzzwords.',
+        'skills.g1': 'Design',
+        'skills.g2': 'Frontend',
+        'skills.g3': 'CMS & Backend',
+        'skills.g4': 'Deployment',
+        'skills.g5': 'Performance & SEO',
+        'skills.g6': 'Collaboration',
+        'services.label': 'Services',
+        'services.title': 'What I build for you.',
+        'services.sub': 'End-to-end delivery — from first sketch to live URL.',
+        'services.s1.title': 'Web Design & UI/UX',
+        'services.s1.text': 'Custom, conversion-focused designs built in Figma and translated pixel-perfect into code. No templates, no shortcuts.',
+        'services.s2.title': 'WordPress Development',
+        'services.s2.text': 'Fast, scalable WordPress sites with custom themes or page builders. WooCommerce, plugins, and performance optimization.',
+        'services.s3.title': 'Landing Pages & SaaS Sites',
+        'services.s3.text': 'High-converting landing pages with animations, clear CTAs, and fast load times. Built to impress and to sell.',
+        'services.s4.title': 'Python & Backend Logic',
+        'services.s4.text': 'Backend scripts, API integrations, data processing, and automation. Clean Python that connects your tools.',
+        'projects.label': 'Portfolio',
+        'projects.title': 'Selected work.',
+        'projects.sub': 'Four projects — each demonstrating a different aspect of my capabilities.',
+        'projects.soon': 'Screenshot coming soon',
+        'projects.p1.tag': 'SaaS / Landing Page',
+        'projects.p1.title': 'SaaS Product Landing Page',
+        'projects.p1.text': 'A modern, animated landing page for a fictional SaaS product. Hero, features, pricing, CTA — built to convert.',
+        'projects.p2.tag': 'Web App / UX',
+        'projects.p2.title': 'Booking App',
+        'projects.p2.text': 'A clean appointment booking tool. Date picker, time slots, confirmation flow — full UX from start to finish.',
+        'projects.p3.tag': 'Dashboard / Data Viz',
+        'projects.p3.title': 'Analytics Dashboard',
+        'projects.p3.text': 'Interactive e-commerce dashboard with charts, filters, KPIs, and simulated live data.',
+        'projects.p4.tag': 'Multi-Page Website',
+        'projects.p4.title': 'Full Business Website',
+        'projects.p4.text': 'A complete multi-page site for a fictional company — navigation, about, services, blog, contact.',
+        'pricing.label': 'Pricing',
+        'pricing.title': 'Transparent packages.',
+        'pricing.sub': 'Fixed-price packages for common needs. Custom quotes available — just ask.',
+        'pricing.popular': 'Most Popular',
+        'pricing.cta': 'Get started',
+        'pricing.cta.custom': 'Request quote',
+        'pricing.t1.tier': 'Starter',
+        'pricing.t1.note': 'one-time · 5 day delivery',
+        'pricing.t1.f1': '1-page landing page',
+        'pricing.t1.f2': 'Mobile responsive',
+        'pricing.t1.f3': 'Contact form',
+        'pricing.t1.f4': 'GitHub deploy',
+        'pricing.t1.f5': '1 revision round',
+        'pricing.t2.tier': 'Professional',
+        'pricing.t2.note': 'one-time · 10 day delivery',
+        'pricing.t2.f1': 'Multi-page website (up to 5)',
+        'pricing.t2.f2': 'WordPress or custom HTML/CSS/JS',
+        'pricing.t2.f3': 'Animations & interactions',
+        'pricing.t2.f4': 'SEO basics + Google Analytics',
+        'pricing.t2.f5': '3 revision rounds',
+        'pricing.t2.f6': '2 weeks post-delivery support',
+        'pricing.t3.tier': 'Custom',
+        'pricing.t3.price': "Let's talk",
+        'pricing.t3.note': 'scoped to your project',
+        'pricing.t3.f1': 'Web apps & dashboards',
+        'pricing.t3.f2': 'Python automation & APIs',
+        'pricing.t3.f3': 'WooCommerce / e-commerce',
+        'pricing.t3.f4': 'Ongoing retainer possible',
+        'pricing.t3.f5': 'Milestone-based billing',
+        'testimonials.label': 'Testimonials',
+        'testimonials.title': 'What clients say.',
+        'testimonials.t1.text': '"Nino delivered a stunning landing page in under 3 days. The attention to detail and the quality of the code were impressive. Would absolutely hire again."',
+        'testimonials.t1.role': 'Founder, SaaS startup · Upwork',
+        'testimonials.t2.text': '"Exactly what I needed — a clean WordPress site, on budget and on time. Nino communicated throughout and handled every change request professionally."',
+        'testimonials.t2.role': 'Managing Director · Malt',
+        'testimonials.t3.text': '"The booking tool Nino built for my studio works flawlessly. He understood the brief immediately and added UX improvements I hadn\'t even thought of."',
+        'testimonials.t3.role': 'Studio Owner · Direct client',
+        'contact.label': 'Contact',
+        'contact.title': "Let's build something.",
+        'contact.sub': 'Have a project in mind? Drop me a message and I\'ll get back to you within 24 hours.',
+        'contact.email': 'Email',
+        'contact.location': 'Location',
+        'contact.location.val': 'Berlin, Germany · Remote worldwide',
+        'contact.find': 'Find me on',
+        'contact.upwork': '↗ Upwork',
+        'contact.malt': '↗ Malt',
+        'contact.github': '↗ GitHub',
+        'form.name': 'Name',
+        'form.name.ph': 'Your name',
+        'form.email': 'Email',
+        'form.email.ph': 'your@email.com',
+        'form.service': 'Service',
+        'form.service.ph': 'Select a service…',
+        'form.service.o1': 'Web Design & UI/UX',
+        'form.service.o2': 'WordPress Development',
+        'form.service.o3': 'Landing Page',
+        'form.service.o4': 'Python / Backend',
+        'form.service.o5': 'Custom / Other',
+        'form.budget': 'Budget',
+        'form.budget.ph': 'Approximate budget…',
+        'form.budget.o4': '€ 3,000+',
+        'form.message': 'Message',
+        'form.message.ph': 'Tell me about your project…',
+        'form.submit': 'Send Message →',
+        'footer.copy': '© 2025 Nino Bornhäußer. All rights reserved.',
+        'footer.imprint': 'Imprint',
+        'footer.privacy': 'Privacy',
+      },
+      de: {
+        'nav.about': 'Über mich',
+        'nav.skills': 'Skills',
+        'nav.services': 'Leistungen',
+        'nav.projects': 'Projekte',
+        'nav.pricing': 'Preise',
+        'nav.contact': 'Kontakt',
+        'hero.eyebrow': 'Verfügbar für Projekte · Berlin',
+        'hero.sub': 'Freelance Webdesigner & Entwickler – ich baue schnelle, saubere digitale Produkte, von Landing Pages bis zu ganzen Unternehmenswebsites.',
+        'hero.cta1': 'Projekte ansehen →',
+        'hero.cta2': 'Kontakt aufnehmen',
+        'hero.stat1': 'Projekte geliefert',
+        'hero.stat2': 'Kundenbewertung',
+        'hero.stat3': 'Ø Erstlieferung',
+        'hero.stat4': 'Jahre Freelancing',
+        'hero.badge.title': 'Standort Berlin',
+        'hero.badge.sub': 'MEZ-Zeitzone · Remote weltweit möglich',
+        'about.label': 'Über mich',
+        'about.title': 'Strategisches Denken trifft saubere Umsetzung.',
+        'about.p1': 'Ich bin <strong>Nino Bornhäußer</strong>, Freelance Webdesigner & Entwickler aus Berlin. Ich arbeite an der Schnittstelle zwischen Design und Technologie – und baue digitale Produkte, die nicht nur gut aussehen, sondern auch funktionieren.',
+        'about.p2': 'Mein Werkzeugkasten: <strong>WordPress</strong> für contentgetriebene Seiten, <strong>Python</strong> für Backend-Logik und Automatisierung sowie <strong>HTML/CSS/JS</strong> für alles, was schnell und präzise sein muss. Verfügbar auf <strong>Upwork</strong> und <strong>Malt</strong>.',
+        'about.p3': 'Was mich auszeichnet: Lieferdisziplin. Ich baue nicht nur – ich liefere pünktlich, kommuniziere proaktiv und denke strategisch darüber nach, was der Kunde wirklich braucht.',
+        'about.v1.title': 'Schnelle Lieferung',
+        'about.v1.text': 'Erste lauffähige Version innerhalb von 48 Stunden. Kein ewiges Warten, keine vagen Timelines.',
+        'about.v2.title': 'Zuverlässigkeit',
+        'about.v2.text': 'Was ich zusage, das liefere ich. Klare Kommunikation in jedem Projekt.',
+        'about.v3.title': 'Strategisches Denken',
+        'about.v3.text': 'Ich stelle die richtigen Fragen, bevor ich baue. Deine Ziele bestimmen jede Designentscheidung.',
+        'about.v4.title': 'Sauberes, modernes Handwerk',
+        'about.v4.text': 'Kein Bloat, keine Templates. Jede Codezeile und jedes Pixel ist bewusst gesetzt.',
+        'skills.label': 'Skills & Tools',
+        'skills.title': 'Mein Tech-Stack.',
+        'skills.sub': 'Ein fokussiertes Set an Tools, das ich wirklich beherrsche – keine Buzzword-Liste.',
+        'skills.g1': 'Design',
+        'skills.g2': 'Frontend',
+        'skills.g3': 'CMS & Backend',
+        'skills.g4': 'Deployment',
+        'skills.g5': 'Performance & SEO',
+        'skills.g6': 'Zusammenarbeit',
+        'services.label': 'Leistungen',
+        'services.title': 'Was ich für dich baue.',
+        'services.sub': 'End-to-End-Lieferung – vom ersten Entwurf bis zur Live-URL.',
+        'services.s1.title': 'Webdesign & UI/UX',
+        'services.s1.text': 'Individuelle, conversionstarke Designs in Figma – pixel-perfekt in Code umgesetzt. Keine Templates, keine Abkürzungen.',
+        'services.s2.title': 'WordPress-Entwicklung',
+        'services.s2.text': 'Schnelle, skalierbare WordPress-Sites mit individuellen Themes. WooCommerce, Plugins und Performance-Optimierung inklusive.',
+        'services.s3.title': 'Landing Pages & SaaS-Sites',
+        'services.s3.text': 'Hochkonvertierende Landing Pages mit Animationen, klaren CTAs und schnellen Ladezeiten. Gebaut, um zu beeindrucken – und zu verkaufen.',
+        'services.s4.title': 'Python & Backend-Logik',
+        'services.s4.text': 'Backend-Scripts, API-Integrationen, Datenverarbeitung und Automatisierung. Sauberes Python, das deine Tools verbindet.',
+        'projects.label': 'Portfolio',
+        'projects.title': 'Ausgewählte Arbeiten.',
+        'projects.sub': 'Vier Projekte – jedes zeigt einen anderen Aspekt meiner Fähigkeiten.',
+        'projects.soon': 'Screenshot folgt',
+        'projects.p1.tag': 'SaaS / Landing Page',
+        'projects.p1.title': 'SaaS-Produkt-Landing-Page',
+        'projects.p1.text': 'Eine moderne, animierte Landing Page für ein fiktives SaaS-Produkt. Hero, Features, Pricing, CTA – gebaut zum Konvertieren.',
+        'projects.p2.tag': 'Web-App / UX',
+        'projects.p2.title': 'Buchungs-App',
+        'projects.p2.text': 'Ein sauberes Terminbuchungs-Tool. Datumsauswahl, Zeitslots, Bestätigungsflow – vollständige UX von Anfang bis Ende.',
+        'projects.p3.tag': 'Dashboard / Datenvisualisierung',
+        'projects.p3.title': 'Analytics-Dashboard',
+        'projects.p3.text': 'Interaktives E-Commerce-Dashboard mit Charts, Filtern, KPIs und simulierten Live-Daten.',
+        'projects.p4.tag': 'Mehrseitige Website',
+        'projects.p4.title': 'Vollständige Unternehmenswebsite',
+        'projects.p4.text': 'Eine komplette mehrseitige Site für ein fiktives Unternehmen – Navigation, Über uns, Leistungen, Blog, Kontakt.',
+        'pricing.label': 'Preise',
+        'pricing.title': 'Transparente Pakete.',
+        'pricing.sub': 'Festpreispakete für häufige Anforderungen. Individuelle Angebote auf Anfrage.',
+        'pricing.popular': 'Am beliebtesten',
+        'pricing.cta': 'Jetzt starten',
+        'pricing.cta.custom': 'Angebot anfragen',
+        'pricing.t1.tier': 'Starter',
+        'pricing.t1.note': 'einmalig · Lieferung in 5 Tagen',
+        'pricing.t1.f1': '1-seitige Landing Page',
+        'pricing.t1.f2': 'Mobil responsive',
+        'pricing.t1.f3': 'Kontaktformular',
+        'pricing.t1.f4': 'GitHub-Deployment',
+        'pricing.t1.f5': '1 Revisionsrunde',
+        'pricing.t2.tier': 'Professional',
+        'pricing.t2.note': 'einmalig · Lieferung in 10 Tagen',
+        'pricing.t2.f1': 'Mehrseitige Website (bis zu 5)',
+        'pricing.t2.f2': 'WordPress oder HTML/CSS/JS',
+        'pricing.t2.f3': 'Animationen & Interaktionen',
+        'pricing.t2.f4': 'SEO-Grundlagen + Google Analytics',
+        'pricing.t2.f5': '3 Revisionsrunden',
+        'pricing.t2.f6': '2 Wochen Support nach Lieferung',
+        'pricing.t3.tier': 'Individuell',
+        'pricing.t3.price': 'Lass uns reden',
+        'pricing.t3.note': 'auf dein Projekt zugeschnitten',
+        'pricing.t3.f1': 'Web-Apps & Dashboards',
+        'pricing.t3.f2': 'Python-Automatisierung & APIs',
+        'pricing.t3.f3': 'WooCommerce / E-Commerce',
+        'pricing.t3.f4': 'Laufendes Retainer-Modell möglich',
+        'pricing.t3.f5': 'Meilensteinbasierte Abrechnung',
+        'testimonials.label': 'Referenzen',
+        'testimonials.title': 'Was Kunden sagen.',
+        'testimonials.t1.text': '„Nino hat in unter 3 Tagen eine beeindruckende Landing Page geliefert. Die Detailgenauigkeit und Codequalität waren herausragend. Absolute Empfehlung."',
+        'testimonials.t1.role': 'Gründerin, SaaS-Startup · Upwork',
+        'testimonials.t2.text': '„Genau das, was ich brauchte – eine saubere WordPress-Site, im Budget und pünktlich. Nino hat durchgehend kommuniziert und jeden Änderungswunsch professionell umgesetzt."',
+        'testimonials.t2.role': 'Geschäftsführer · Malt',
+        'testimonials.t3.text': '„Das Buchungstool, das Nino für mein Studio entwickelt hat, funktioniert reibungslos. Er hat das Briefing sofort verstanden und sogar UX-Verbesserungen eingebaut, an die ich selbst nicht gedacht hatte."',
+        'testimonials.t3.role': 'Studio-Inhaberin · Direktkunde',
+        'contact.label': 'Kontakt',
+        'contact.title': 'Lass uns etwas bauen.',
+        'contact.sub': 'Hast du ein Projekt? Schreib mir – ich melde mich innerhalb von 24 Stunden.',
+        'contact.email': 'E-Mail',
+        'contact.location': 'Standort',
+        'contact.location.val': 'Berlin, Deutschland · Remote weltweit',
+        'contact.find': 'Finde mich auf',
+        'contact.upwork': '↗ Upwork',
+        'contact.malt': '↗ Malt',
+        'contact.github': '↗ GitHub',
+        'form.name': 'Name',
+        'form.name.ph': 'Dein Name',
+        'form.email': 'E-Mail',
+        'form.email.ph': 'deine@email.de',
+        'form.service': 'Leistung',
+        'form.service.ph': 'Leistung auswählen…',
+        'form.service.o1': 'Webdesign & UI/UX',
+        'form.service.o2': 'WordPress-Entwicklung',
+        'form.service.o3': 'Landing Page',
+        'form.service.o4': 'Python / Backend',
+        'form.service.o5': 'Individuell / Sonstiges',
+        'form.budget': 'Budget',
+        'form.budget.ph': 'Ungefähres Budget…',
+        'form.budget.o4': '€ 3.000+',
+        'form.message': 'Nachricht',
+        'form.message.ph': 'Erzähl mir von deinem Projekt…',
+        'form.submit': 'Nachricht senden →',
+        'footer.copy': '© 2025 Nino Bornhäußer. Alle Rechte vorbehalten.',
+        'footer.imprint': 'Impressum',
+        'footer.privacy': 'Datenschutz',
+      }
+    };
+
+    let currentLang = 'en';
+
+    function setLang(lang) {
+      currentLang = lang;
+      document.documentElement.setAttribute('data-lang', lang);
+
+      // Update buttons
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
+      });
+
+      // Update text content
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        const val = i18n[lang][key];
+        if (val) el.innerHTML = val;
+      });
+
+      // Update placeholders
+      document.querySelectorAll('[data-placeholder-i18n]').forEach(el => {
+        const key = el.getAttribute('data-placeholder-i18n');
+        const val = i18n[lang][key];
+        if (val) el.placeholder = val;
+      });
+
+      // Update html lang attribute
+      document.documentElement.lang = lang;
+    }
+
+    /* ─── THEME ───────────────────────────────────────────────────── */
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      document.documentElement.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+    }
+
+    /* ─── NAV SCROLL ──────────────────────────────────────────────── */
+    const mainNav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      mainNav.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    /* ─── MOBILE MENU ─────────────────────────────────────────────── */
+    function toggleMobileMenu() {
+      document.getElementById('mobile-menu').classList.toggle('open');
+    }
+
+    function closeMobileMenu() {
+      document.getElementById('mobile-menu').classList.remove('open');
+    }
+
+    /* ─── SCROLL REVEAL ───────────────────────────────────────────── */
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    /* ─── FORM ────────────────────────────────────────────────────── */
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const btn = e.target;
+      const orig = btn.innerHTML;
+      btn.innerHTML = currentLang === 'de' ? 'Gesendet ✓' : 'Sent ✓';
+      btn.style.background = '#4caf50';
+      setTimeout(() => {
+        btn.innerHTML = orig;
+        btn.style.background = '';
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
