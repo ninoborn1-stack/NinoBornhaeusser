@@ -1429,7 +1429,7 @@
       <div class="projects-grid">
         <a href="https://ninoborn1-stack.github.io/Projekt-1-landing/#cta" target="_blank" rel="noopener" class="project-card reveal" style="display:block;text-decoration:none;color:inherit;">
           <div class="project-thumb">
-            <img src="landing.png" alt="SaaS Product Landing Page Preview" style="width:100%;height:100%;object-fit:cover;display:block;">
+            <img id="saas-img" src="landing - en.png" data-src-en="landing - en.png" data-src-de="laning - de.png" alt="SaaS Product Landing Page Preview" style="width:100%;height:100%;object-fit:cover;display:block;">
           </div>
           <div class="project-info">
             <p class="project-tag" data-i18n="projects.p1.tag">SaaS / Landing Page</p>
@@ -1440,7 +1440,7 @@
 
         <a href="https://ninoborn1-stack.github.io/projekt-2/" target="_blank" rel="noopener" class="project-card reveal reveal-delay-1" style="display:block;text-decoration:none;color:inherit;">
           <div class="project-thumb">
-            <img src="booking1.png" alt="Booking App Preview" style="width:calc(100% + 14px);height:calc(100% + 14px);object-fit:fill;display:block;margin:-7px;position:relative;top:7px;">
+            <img id="booking-img" src="booking1 - en.png" data-src-en="booking1 - en.png" data-src-de="booking1 - de.png" alt="Booking App Preview" style="width:calc(100% + 14px);height:calc(100% + 14px);object-fit:fill;display:block;margin:-7px;position:relative;top:7px;">
           </div>
           <div class="project-info">
             <p class="project-tag" data-i18n="projects.p2.tag">Web App / UX</p>
@@ -2003,6 +2003,11 @@
 
       // Update html lang attribute
       document.documentElement.lang = lang;
+
+      // Update language-specific images
+      document.querySelectorAll('[data-src-en][data-src-de]').forEach(img => {
+        img.src = img.getAttribute('data-src-' + lang);
+      });
     }
 
     /* ─── THEME ───────────────────────────────────────────────────── */
